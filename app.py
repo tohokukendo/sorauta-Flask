@@ -9,7 +9,7 @@ import dimod
 from pyqubo import Array, Constraint, Placeholder
 from dwave.system import DWaveCliqueSampler
 from openjij import SQASampler
-import process
+import process #関数およびクラスの読み込み
 
 app = Flask(__name__)
 run_with_ngrok(app)  # Start ngrok when app is run
@@ -17,7 +17,10 @@ run_with_ngrok(app)  # Start ngrok when app is run
 parody = "ここに替え歌が出力されます"
 myword = "まだ選択されていません"
 
-def convertLyrics(Lyrics, Words):
+def debug(num): #デバッグ用
+  print("runned by here, num=", num)
+
+def convertLyrics(Lyrics, Words): #歌詞を読み込んで替え歌を出力する関数
 
     #引数からLyricsを読み込み
     lyrics_array_temp = Lyrics.translate(str.maketrans({",":"", ".":"", "!":"", "?":""})).split()
@@ -40,6 +43,8 @@ def convertLyrics(Lyrics, Words):
         lyrics_array.append([idx, l, pos_l, l_len, l_ipa, l_ipa_ja, pos_ipa_ja, len_ipa_ja])
         pos_l += l_len
         pos_ipa_ja += len_ipa_ja
+
+    debug(0)
 
     #英語の歌詞（日本語風IPA化済み）を結合
     l_ipa_ja_all = ""
@@ -65,8 +70,12 @@ def convertLyrics(Lyrics, Words):
     
     word_dict = process.prepareWordDict(vocab)
 
+    debug(1)
+
     #インスタンス生成
     k2IPA = process.Kana2IPA("Japanese-Phonetic-Notation/Dictionary/kana_to_eng.dic")
+
+    debug(2)
     
     #引数からkeywordを読み込み
     keyword = Words
@@ -77,12 +86,16 @@ def convertLyrics(Lyrics, Words):
     #空耳ワード辞書から歌詞と発音一致度が高いワードを抽出
     word_opt = process.getWordOpt(word_dict, l_ipa_ja_all, keyword, model)
 
+    debug(3)
+
     #ランダムで2000個を抽出
     MAX_WORDS = 2000
     if len(word_opt) > MAX_WORDS:
         words = random.sample(word_opt.MAX_WORDS)
     else:
         words = word_opt
+
+    debug(4)
 
     #空耳ワードの文字の重なりを評価
     C = process.makeCmat(words)
@@ -104,6 +117,8 @@ def convertLyrics(Lyrics, Words):
     lam1 = 1
     lam2 = 1
     lam3 = 100
+
+    debug(5)
 
     #コスト関数
     if formula_mode == DIMOD:
@@ -135,6 +150,8 @@ def convertLyrics(Lyrics, Words):
     OPENJIJ = 2
     sampler_mode = OPENJIJ
 
+    debug(6)
+
     num_reads = 100
     if sampler_mode == DWAVE:
         from dwave.system import DWaveSampler, EmbeddingComposite
@@ -159,6 +176,8 @@ def convertLyrics(Lyrics, Words):
         if res.get(f'x[{i}]',0) == 1:
             sora_word.append(words[i])
     sora_word = sorted(sora_word,key=lambda x:(x[6]))
+
+    debug(7)
 
     #結果の整形
     pos = 0
@@ -194,19 +213,17 @@ def convertLyrics(Lyrics, Words):
     
     return results
 
-
 @app.route("/", methods=["GET","POST"])
 def index():
     if request.method == 'POST':
       id = uuid.uuid1()
-      readlyrics = request.form.get('input-lyrics')
-      myword = request.form.get('select-word')
-      if myword == 'word0':
-        myword == "ディスニー"
-      else:
-        myword == "アニマル"
-      parody = convertLyrics(readlyrics,myword)
-      return render_template("index.html",myword=myword,parody=parody)
+      readlyrics = request.form.get('input-lyrics') #テキストボックス入力された歌詞を取得
+      myword = request.form.get('select-word') #今回は使用していないが、どのワードが選択されたか判定可能
+
+      word = "ディズニー"#クライアントによるワードの選択機能はまだ実装していません
+    
+      parody = convertLyrics(readlyrics,word)
+      return render_template("index.html",myword=word,parody=parody)
     else:
       return render_template("index.html")
 
