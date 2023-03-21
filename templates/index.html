@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>sorauta</title>
+        <meta name="viewport" content="width=decice-width, initial-scale=1">
+        <meta name="description" content="sorauta">
+        <link rel="stylesheet" href="static/css/style.css">
+        <script src="static/js/script.js"></script>
+    </head>
+
+    <h1>Sorauta<span style="font-size: 80%;">&nbsp;-create parody-</span></h1>
+
+    <form action="/" method="POST">
+        <div class="cp_ipselect cp_sl01">
+            <select id="select-song" onchange="insertLyrics()">
+                <option value="" hidden>サンプル歌詞を使う</option>
+                <option value="song1">きらきら星</option>
+                <option value="song2">ふるさと</option>
+                <option value="non">サンプル歌詞を使わない</option>
+            </select>
+        </div>
+    
+        <div>
+            <div>
+                <textarea name="input-lyrics" id="input-lyrics", class="lyrics">ここに変換したい歌詞を入力してください</textarea>
+            </div>
+    
+            <div class="cp_ipselect cp_sl01">
+                <select name="select-word" id="select-word" onchange="setWord1()">
+                    <option value="" hidden>単語を選択してください</option>
+                    <option value="word0">ディズニー</option>
+                    <option value="word1">サッカー</option>
+                    <option value="word2">駅名</option>
+                    <option value="word3">国名</option>
+                    <option value="word4">動物</option>
+                    <option value="word5">オリジナルの単語リストを使う</option>
+                </select>
+            </div>
+    
+            <table>
+                <tr>
+                    <td><input type="button" class="word-list" value="ディズニー" id="word0" onclick="setWord2(0)"></td>
+                    <td><input type="button" class="word-list" value="サッカー" id="word1" onclick="setWord2(1)"></td>
+                    <td><input type="button" class="word-list" value="駅名" id="word2" onclick="setWord2(2)"></td>
+                    <td><input type="button" class="word-list" value="国名" id="word3" onclick="setWord2(3)"></td>
+                    <td><input type="button" class="word-list" value="動物" id="word4" onclick="setWord2(4)"></td>
+                    <td><input type="button" class="word-list" value="オリジナルの単語リストを使う" id="word5" onclick="setWord2(5)"></td>
+                </tr>
+            </table>
+    
+            <div>
+                <input type="submit" class="convert" value="替え歌を作成" onclick="convert()">
+            </div>
+        </div>
+    </form>
+
+    <div>
+        <textarea id="output-lyrics", class="lyrics">{{parody-}}</textarea>
+    </div>
+
+</html>

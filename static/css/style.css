@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+h1 {
+    font-family: 'Caveat', cursive;
+}
+
+.lyrics{
+    display: inline-block;
+    width: 75%;
+    height: 9em;
+    padding: 10px;
+    border: 1px solid #bbbbbb;
+    box-sizing: content-box;
+    background: transparent;
+    margin: 0.5em 0;
+    line-height: 1.5;
+    height: 6em;
+    color: #666666
+}
+
+.word-list{
+    margin-top: 10px;
+    display: inline-block;
+    border-radius: 5%;
+    font-size: 12pt;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 6px;
+    background: #00bfff;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    /*box-shadow: 6px 6px 3px #666666;*/
+    /*border: 2px solid #00bfff;*/
+    border: none;
+}
+
+.word-list:hover{
+    box-shadow: none;
+    color: #ffffff;
+    background: #4169e1;
+}
+
+.convert{
+    margin-top: 18px;
+    margin-bottom: 5px;
+    display: inline-block;
+    border-radius: 5%;
+    font-size: 15pt;
+    text-align: center;
+    cursor: pointer;
+    padding: 6px 6px;
+    background: #00bfff;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    /*box-shadow: 6px 6px 3px #666666;*/
+    /*border: 2px solid #00bfff;*/
+    border: none;
+}
+
+.convert:hover{
+    box-shadow: none;
+    color: #ffffff;
+    background: #4169e1;
+}
+
+.cp_ipselect {
+	overflow: hidden;
+	width: 40%;
+	/*margin: 2em auto;*/
+	text-align: center;
+}
+.cp_ipselect select {
+	width: 100%;
+	padding-right: 1em;
+	cursor: pointer;
+	text-indent: 0.01px;
+	text-overflow: ellipsis;
+	border: none;
+	outline: none;
+	background: transparent;
+	background-image: none;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+    display: none;
+}
+.cp_ipselect.cp_sl01 {
+	position: relative;
+	border: 1px solid #bbbbbb;
+	border-radius: 2px;
+	background: #ffffff;
+}
+.cp_ipselect.cp_sl01::before {
+	position: absolute;
+	top: 0.8em;
+	right: 0.9em;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #666666;
+	pointer-events: none;
+}
+.cp_ipselect.cp_sl01 select {
+	padding: 8px 38px 8px 8px;
+	color: #666666;
+}
